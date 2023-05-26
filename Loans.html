@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h1>Loans</h1>
+    <div id="Loans"></div>
+    <a href="about.html">About</a><br>
+    CustID: <input id="CustID"><br>
+    BookID:<input id="BookID"><br>
+    Loandate: <input id="Loandate"><br>
+    Returndate: <input id="Returndate"><br>
+    <button onclick="newLoan()">add new loan</button>
+    <script>
+        const MY_SERVER = 'http://127.0.0.1:5000'
+        const newLoan = async () => {
+            data = {
+                CustID: CustID.value,
+                BookID: BookID.value,
+                Loandate: Loandate.value,
+                Returndate: Returndate.value,
+                
+            }
+            loans1 = await axios.post(MY_SERVER + "/newLoan", data)
+            loadData()
+        }
+
+        const delLoans = async (id) => {
+            loans1 = await axios.delete(MY_SERVER + `/delLoan/${id}`)
+            await loadData()
+        }
+        const updLoans = async (id) => {
+            console.log(id);
+            data = {
+                CustID: CustID.value,
+                BookID: BookID.value,
+                Loandate: Loandate.value,
+                Returndate: Returndate.value,
+            }
+            loans1 = await axios.put(MY_SERVER + `/updLoan/${id}`, data)
+            loadData()
+        }
+
+        const loadData = async () => {
+            loans1 = await axios.get(MY_SERVER + `/loan`)
+            console.log(loans1.data);
+            Loans.innerHTML = loans1.data.map(loan => `<div>
+                <button onClick='delLoans(${loan.id})'>del ${loan.id}</button>
+                <button onClick='updLoans(${loan.id})'>upd ${loan.id}</button>
+                ${loan.CustID},
+                ${loan.BookID},
+                ${loan.Loandate},
+                ${loan.Returndate},
+                </div>`).join("")
+        }
+        loadData()
+    </script>
+
+</body>
+
+</html>
