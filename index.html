@@ -5,68 +5,72 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Library</title>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <h1>My library</h1>
+    <h1>book list</h1>
     <div id="library"></div>
     <a href="about.html">About</a><br>
-    ISBN : <input id="ISBN"><br>
-    book_name: <input id="bookName"><br>
-    author_name:<input id="authorName"><br>
-    publish_date: <input id="publishDate"><br>
-    publisher: <input id="publisher"><br>
-    <button onclick="newBook()">add new book</button>
+    name: <input id="name"><br>
+    author: <input id="author"><br>
+    year_published: <input id="year_published"><br>
+    type: <input id="type"><br>
+    <button onclick="addNewBook()">Add New Book</button>
     <script>
-        const MY_SERVER = 'http://127.0.0.1:5000'
-        const newBook = async () => {
-            data = {
-                ISBN: ISBN.value,
-                bookName: bookName.value,
-                authorName: authorName.value,
-                publishDate: publishDate.value,
-                publisher: publisher.value
-                
-            }
-            books1 = await axios.post(MY_SERVER + "/newbook", data)
-            loadData()
-        }
+        const MY_SERVER = 'http://127.0.0.1:5000';
 
-        const delBooks = async (id) => {
-            books1 = await axios.delete(MY_SERVER + `/delBooks/${id}`)
-            await loadData()
-        }
-        const updBooks = async (id) => {
-            console.log(id);
-            data = {
-                ISBN: ISBN.value,
-                bookName: bookName.value,
-                authorName: authorName.value,
-                publishDate: publishDate.value,
-                publisher: publisher.value
-            }
-            books1 = await axios.put(MY_SERVER + `/updBooks/${id}`, data)
-            loadData()
-        }
+        const addNewBook = async () => {
+            const data = {
+                name: document.getElementById("name").value,
+                author: document.getElementById("author").value,
+                year_published: document.getElementById("year_published").value,
+                type: document.getElementById("type").value                
+            };
+            
+            await axios.post(`${MY_SERVER}/books`, data);
+            loadData();
+        };
+
+        const deleteBook = async (id) => {
+            await axios.delete(`${MY_SERVER}/books/${id}`);
+            await loadData();
+        };
+
+        const updateBook = async (id) => {
+            const data = {
+                id: id,
+                name: document.getElementById("name").value,
+                author: document.getElementById("author").value,
+                year_published: document.getElementById("year_published").value,
+                type: document.getElementById("type").value
+            };
+
+            await axios.put(`${MY_SERVER}/books/${id}`, data);
+            await loadData();
+        };
 
         const loadData = async () => {
-            books1 = await axios.get(MY_SERVER + `/book`)
-            console.log(books1.data);
-            library.innerHTML = books1.data.map(book => `<div>
-                <button onClick='delBooks(${book.id})'>del ${book.id}</button>
-                <button onClick='updBooks(${book.id})'>UPD ${book.id}</button>
-                ${book.ISBN},
-                ${book.book_name},
-                ${book.author_name},
-                ${book.publish_date},
-                ${book.publisher},
-                </div>`).join("")
-        }
-        loadData()
-    </script>
+            const response = await axios.get(`${MY_SERVER}/books`);
+            const books = response.data;
 
+            const libraryDiv = document.getElementById("library");
+            libraryDiv.innerHTML = books.map(book => `
+                <div>
+                    <button onclick="deleteBook(${book.id})">Delete ${book.id}</button>
+                    <button onclick="updateBook(${book.id})">Update ${book.id}</button>
+                    ${book.id},
+                    ${book.name},
+                    ${book.author},
+                    ${book.year_published},
+                    ${book.type}
+                </div>`
+            ).join("");
+        };
+
+        loadData();
+    </script>
 </body>
 
 </html>
