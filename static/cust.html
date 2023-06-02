@@ -54,12 +54,11 @@
 			<td>
 				<span class="custom-checkbox">
 					<input type="checkbox" id="checkbox${customer.id}" name="options[]" value="${customer.id}">
-					<label for="checkbox${customer.id}"></label>
+					<label for="checkbox${customer.id}"></label>				
 				</span>
 			</td>
 			<td>${customer.name}</td>
-			<td>thomashardy@mail.com</td>
-			<td>89 Chiaroscuro Rd, Portland, USA</td>
+			<td>t${customer.city}</td>
 			<td>${customer.age}</td>
 			<td>
 				<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -98,10 +97,8 @@
 							</span>
 						</th>
 						<th>Name</th>
-						<th>Email</th>
-						<th>Address</th>
-						<th>Phone</th>
-						<th>Actions</th>
+						<th>City</th>
+						<th>Age</th>
 					</tr>
 				</thead>
 				<tbody id="tableBody">
