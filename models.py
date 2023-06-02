@@ -52,20 +52,20 @@ class Loans(db.Model):
     # book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     customer_id = db.Column(db.Integer)
     book_id = db.Column(db.Integer)
-    loandate = db.Column(db.String(200))
-    returndate = db.Column(db.String(10))
+    loan_date = db.Column(db.String(200))
+    return_date = db.Column(db.String(10))
 
-    def __init__(self, customer_id, book_id, loandate, returndate):
+    def __init__(self, customer_id, book_id, loan_date, return_date):
         self.customer_id = customer_id
         self.book_id = book_id
-        self.loandate = loandate
-        self.returndate = returndate
+        self.loan_date = loan_date
+        self.return_date = return_date
 
     def to_dict(self):
         return {
             'id': self.id,
             'customer_id': self.customer_id,
             'book_id': self.book_id,
-            'loan_date': self.loandate,
-            'return_date': self.returndate
+            'loan_date': self.loan_date,
+            'return_date': self.return_date
         }
