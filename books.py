@@ -25,5 +25,23 @@ def add_book():
     db.session.commit()
     return {"add": "success"}
 
-# Add more routes as needed
+@books_blueprint.route("/<id>", methods=['PUT'])
+def update_book(id):
+    book = Books.query.get_or_404(id)
+    data = request.get_json()
+    book.name = data['name']
+    book.author = data['author']
+    book.year_published = data['year_published']
+    book.type = data['type']
+    db.session.commit()
+    return {"update": "success"}
+
+@books_blueprint.route("/<id>", methods=['DELETE'])
+def delete_book(id):
+    book = Books.query.get_or_404(id)
+    db.session.delete(book)
+    db.session.commit()
+    return {"delete": "success"}
+
+
 

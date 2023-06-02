@@ -27,5 +27,22 @@ def update_customer(id):
     db.session.commit()
     return {"update": "success"}
 
-# Add more routes as needed
+
+@customers_blueprint.route("/", methods=['POST'])
+def add_customer():
+    data = request.get_json()
+    customer = Customers(data['name'], data['city'], data['age'])
+    db.session.add(customer)
+    db.session.commit()
+    return {"add": "success"}
+
+
+@customers_blueprint.route("/<id>", methods=['DELETE'])
+def delete_customer(id):
+    customer = Customers.query.get_or_404(id)
+    db.session.delete(customer)
+    db.session.commit()
+    return {"delete": "success"}
+
+
 

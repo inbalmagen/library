@@ -22,46 +22,14 @@
         const MY_SERVER = 'http://127.0.0.1:5000';
         
         const newLoan = async () => {
-            const customer_id = customer_id.value;
-            const book_id = book_id.value;
-            const loan_date = loan_date.value;
-            const return_date = return_date.value;
-            
-            // Fetch the book details to determine the book type
-            const bookResponse = await axios.get(`${MY_SERVER}/books/${book_id}`);
-            const book = bookResponse.data;
-            
-            // Determine the maximum loan time based on the book type
-            let maxLoanTime = 0;
-            switch (book.type) {
-                case 1:
-                    maxLoanTime = 10;
-                    break;
-                case 2:
-                    maxLoanTime = 5;
-                    break;
-                case 3:
-                    maxLoanTime = 2;
-                    break;
-                default:
-                    console.log('Invalid book type');
-            }
-            
-            // Validate the loan duration
-            const loanDuration = Math.ceil((new Date(return_date) - new Date(loan_date)) / (1000 * 60 * 60 * 24));
-            if (loanDuration > maxLoanTime) {
-                alert(`Loan duration exceeds the maximum allowed for this book type (${maxLoanTime} days).`);
-                return;
-            }
-            
             const data = {
-                customer_id: customer_id,
-                book_id: book_id,
-                loan_date: loan_date,
-                return_date: return_date
+                customer_id: document.getElementById("customer_id").value,
+                book_id: document.getElementById("book_id").value,
+                loan_date: document.getElementById("loan_date").value,
+                return_date: document.getElementById("return_date").value,
             };
             
-            const response = await axios.post(`${MY_SERVER}/loans`, data);
+            await axios.post(`${MY_SERVER}/loans`, data);
             loadData();
         };
         

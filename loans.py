@@ -25,5 +25,22 @@ def create_loan():
     db.session.commit()
     return {"add": "success"}
 
-# Add more routes as needed
+@loans_blueprint.route("/<id>", methods=['DELETE'])
+def delete_loan(id):
+    loan = Loans.query.get_or_404(id)
+    db.session.delete(loan)
+    db.session.commit()
+    return {"delete": "success"}
+
+@loans_blueprint.route("/<id>", methods=['PUT'])
+def update_loan(id):
+    loan = Loans.query.get_or_404(id)
+    data = request.get_json()
+    loan.customer_id = data['customer_id']
+    loan.book_id = data['book_id']
+    loan.loan_date = data['loan_date']
+    loan.return_date = data['return_date']
+    db.session.commit()
+    return {"update": "success"}
+
 
