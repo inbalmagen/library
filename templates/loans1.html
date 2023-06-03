@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <script>
+	$(document).on("click", ".edit", function () {
+		var myLoanId = $(this).data('id');
+		$(".modal-body #loanId1").val( myLoanId );
+		// As pointed out in comments, 
+		// it is unnecessary to have to manually call the modal.
+		// $('#addBookDialog').modal('show');
+	});
+
 	const MY_SERVER = 'http://127.0.0.1:5000';
 
 	const newLoan = async () => {
@@ -21,13 +29,14 @@
             await loadData();
 	};
 
-	const updLoans = async (id) => {
-            console.log(id);
-            data = {
-                customer_id: customer_id.value,
-                book_id: book_id.value,
-                loan_date: loan_date.value,
-                return_date: return_date.value
+	const updLoans = async () => {
+		id = document.getElementById("loanId1").value
+            
+            const data = {
+                customer_id: document.getElementById("customer_id1").value,
+                book_id: document.getElementById("book_id1").value,
+                loan_date: document.getElementById("loan_date1").value,
+                return_date: document.getElementById("return_date1").value,
             };
             
             loans1 = await axios.put(MY_SERVER + `/loans/${id}`, data);
@@ -51,7 +60,7 @@
 			<td>${loan.loan_date}</td>
 			<td>${loan.return_date}</td>
 			<td>
-				<a href="#editLoanModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+				<a href="#editLoanModal" data-id="${loan.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 				<a href="#deleteLoanModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 			</td>
 		</tr>
@@ -145,25 +154,29 @@
 				<div class="modal-body">					
 					<div class="form-group">
 						<label>Customer ID</label>
-						<input type="text" class="form-control" required>
+						<input type="text" id="customer_id1" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Book ID</label>
-						<textarea class="form-control" required></textarea>
+						<textarea id="book_id1" class="form-control" required></textarea>
 					</div>
 					<div class="form-group">
 						<label>Loan Date</label>
-						<textarea class="form-control" required></textarea>
+						<textarea id="loan_date1" class="form-control" required></textarea>
 					</div>
 					<div class="form-group">
 						<label>Return Date</label>
-						<input type="text" class="form-control" required>
+						<input type="text" id="return_date1" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Loan ID1</label>
+						<input type="text" class="form-control" id="loanId1"/>
 					</div>								
 				</div>
-				
+
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" value="Save">
+					<input type="submit" onclick="updLoans()" class="btn btn-info" value="Save">
 				</div>
 			</form>
 		</div>

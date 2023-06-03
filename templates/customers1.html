@@ -2,8 +2,8 @@
 {% block content %}
 <script>
 	$(document).on("click", ".edit", function () {
-		var myBookId = $(this).data('id');
-		$(".modal-body #customerid3").val( myBookId );
+		var myCustomerId = $(this).data('id');
+		$(".modal-body #customerid3").val( myCustomerId );
 		// As pointed out in comments, 
 		// it is unnecessary to have to manually call the modal.
 		// $('#addBookDialog').modal('show');
