@@ -22,6 +22,7 @@ app.register_blueprint(loans_blueprint, url_prefix='/loans')
 #     return send_from_directory('static', path)
 
 @app.route("/booksPage")
+@app.route("/")
 def get_books():
     # Your code to retrieve books from the database
     # ...
@@ -29,9 +30,15 @@ def get_books():
 
 @app.route("/customersPage")
 def get_customers():
-    # Your code to retrieve books from the database
+    # Your code to retrieve customers from the database
     # ...
     return render_template("customers1.html")
+
+@app.route("/loansPage")
+def get_loans():
+    # Your code to retrieve loans from the database
+    # ...
+    return render_template("loans1.html")
 
 if __name__ == "__main__":
     with app.app_context():
