@@ -9,6 +9,14 @@
 		// $('#addBookDialog').modal('show');
 	});
 
+	$(document).on("click", ".myDelete", function () {
+		var myDeleteId2 = $(this).data('id');
+		$("#loanId2").val( myDeleteId2 );
+		// As pointed out in comments, 
+		// it is unnecessary to have to manually call the modal.
+		// $('#addBookDialog').modal('show');
+	});
+
 	const MY_SERVER = 'http://127.0.0.1:5000';
 
 	const newLoan = async () => {
@@ -24,7 +32,9 @@
             loadData();
         };
 
-		const delLoans = async (id) => {
+		const deleteLoan = async () => {
+			id = document.getElementById("loanId2").value
+
             loans1 = await axios.delete(MY_SERVER + `/loans/${id}`);
             await loadData();
 	};
@@ -61,7 +71,7 @@
 			<td>${loan.return_date}</td>
 			<td>
 				<a href="#editLoanModal" data-id="${loan.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-				<a href="#deleteLoanModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+				<a href="#deleteLoanModal" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 			</td>
 		</tr>
 		`).join("");
@@ -195,9 +205,13 @@
 					<p>Are you sure you want to delete these Records?</p>
 					<p class="text-warning"><small>This action cannot be undone.</small></p>
 				</div>
+				<div class="form-group">
+					<label>Loan ID</label>
+					<input type="text" class="form-control" id="loanId2"/>
+				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
+					<input type="submit" onclick="deleteLoan()" class="btn btn-danger" value="Delete">
 				</div>
 			</form>
 		</div>
