@@ -27,6 +27,12 @@ def get_books():
     # ...
     return render_template("index1.html")
 
+@app.route("/customersPage")
+def get_customers():
+    # Your code to retrieve books from the database
+    # ...
+    return render_template("customers1.html")
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
