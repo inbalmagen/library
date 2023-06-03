@@ -2,6 +2,14 @@
 {% extends "base.html" %}
 {% block content %}
 <script>
+	$(document).on("click", ".edit", function () {
+		var myBookId = $(this).data('id');
+		$(".modal-body #bookId1").val( myBookId );
+		// As pointed out in comments, 
+		// it is unnecessary to have to manually call the modal.
+		// $('#addBookDialog').modal('show');
+	});
+
 	const MY_SERVER = 'http://127.0.0.1:5000';
 
 	const addNewBook = async () => {
@@ -22,13 +30,18 @@
 		await loadData();
 	};
 
-	const updateBook = async (id) => {
+	const updateBook = async () => {
+		id = document.getElementById("bookId1").value
+
 		const data = {
-			name: document.getElementById("name").value,
-			author: document.getElementById("author").value,
-			year_published: document.getElementById("year_published").value,
-			type: document.getElementById("type").value
+			name: document.getElementById("name1").value,
+			author: document.getElementById("author1").value,
+			year_published: document.getElementById("year_published1").value,
+			type: document.getElementById("type1").value
 		};
+
+		console.log(`BOOK ID: ${id}`)
+		console.log(data)
 
 		await axios.put(`${MY_SERVER}/books/${id}`, data);
 		await loadData();
@@ -51,7 +64,7 @@
 			<td>${book.year_published}</td>
 			<td>${book.type}</td>
 			<td>
-				<a href="#editBookModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+				<a href="#editBookModal" data-id="${book.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 				<a href="#deleteBookModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 			</td>
 		</tr>
@@ -127,7 +140,7 @@
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" onclick="async () => {await addNewBook()}" class="btn btn-success" value="Add">
+					<input type="submit" onclick="addNewBook()" class="btn btn-success" value="Add">
 				</div>
 			</form>
 		</div>
@@ -144,25 +157,30 @@
 				</div>
 				<div class="modal-body">					
 					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
+						<label>Name1</label>
+						<input type="text" id="name1" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Author</label>
-						<textarea class="form-control" required></textarea>
+						<label>Author1</label>
+						<textarea id="author1" class="form-control" required></textarea>
 					</div>
 					<div class="form-group">
-						<label>Year Published</label>
-						<textarea class="form-control" required></textarea>
+						<label>Year Published1</label>
+						<textarea id="year_published1" class="form-control" required></textarea>
 					</div>
 					<div class="form-group">
-						<label>Type</label>
-						<input type="text" class="form-control" required>
-					</div>					
-				</div>
+						<label>Type1</label>
+						<input type="text" id="type1" class="form-control" required>
+					</div>				
+					<div hidden class="form-group">
+						<label>Book ID1</label>
+						<input type="text" class="form-control" id="bookId1"/>
+					</div>	
+					
+					
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" value="Save">
+					<input type="submit" onclick="updateBook()" class="btn btn-info" value="Save">
 				</div>
 			</form>
 		</div>
@@ -183,7 +201,7 @@
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
+					<input type="submit" onclick="async () => {await deleteBook()}" class="btn btn-danger" value="Delete">
 				</div>
 			</form>
 		</div>
