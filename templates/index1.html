@@ -21,16 +21,16 @@
 	const MY_SERVER = 'http://127.0.0.1:5000';
 
 	const addNewBook = async () => {
-		console.log('inside add new customer')
+		console.log('inside add new book')
 		const data = {
 			name: document.getElementById("name").value,
 			author: document.getElementById("author").value,
 			year_published: document.getElementById("year_published").value,
-			type: document.getElementById("type").value
+			type: document.getElementById("type_2").value
 		};
 
 		await axios.post(`${MY_SERVER}/books`, data);
-		await loadData();
+		loadData();
 	};
 
 	const deleteBook = async () => {
@@ -54,7 +54,7 @@
 		console.log(data)
 
 		await axios.put(`${MY_SERVER}/books/${id}`, data);
-		await loadData();
+		loadData();
 	};
 
 	const loadData = async () => {
@@ -137,16 +137,22 @@
 					</div>
 					<div class="form-group">
 						<label>Author</label>
-						<textarea id="author" class="form-control" required></textarea>
+						<input type="text" id="author" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Year Published</label>
-						<textarea id="year_published" class="form-control" required></textarea>
-					</div>
+						<label for="year_published1">Year Published</label>
+						<input type="number" id="year_published" class="form-control" min="1900" max="2023" required>
+					  </div>
 					<div class="form-group">
-						<label>Type</label>
-						<input id="type" type="text" class="form-control" required>
-					</div>					
+						<label>Type</label><br/>
+						<div class="bg-example">
+							<select id="type_2" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
+								<option value="1">Up to 10 days</option>
+								<option value="2">Up to 5 days</option>
+								<option value="3">Up to 2 days</option>
+							</select>
+						</div>						  
+					</div>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -167,21 +173,31 @@
 				</div>
 				<div class="modal-body">					
 					<div class="form-group">
-						<label>Name1</label>
+						<label>Name</label>
 						<input type="text" id="name1" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Author1</label>
-						<textarea id="author1" class="form-control" required></textarea>
+						<label>Author</label>
+						<input type="text" id="author1" class="form-control" required></textarea>
 					</div>
 					<div class="form-group">
-						<label>Year Published1</label>
-						<textarea id="year_published1" class="form-control" required></textarea>
-					</div>
+						<label for="year_published1">Year Published</label>
+						<input type="number" id="year_published1" class="form-control" min="1900" max="2023" required>
+					</div>					  
 					<div class="form-group">
+						<label>Type</label><br/>
+						<div class="bg-example">
+							<select id="type1" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
+								<option value="1">Up to 10 days</option>
+								<option value="2">Up to 5 days</option>
+								<option value="3">Up to 2 days</option>
+							</select>
+						</div>						  
+					</div>
+					<!-- <div class="form-group">
 						<label>Type1</label>
 						<input type="text" id="type1" class="form-control" required>
-					</div>				
+					</div>				 -->
 					<div hidden class="form-group">
 						<label>Book ID1</label>
 						<input type="text" class="form-control" id="bookId1"/>
