@@ -53,7 +53,7 @@ class Loans(db.Model):
     customer_id = db.Column(db.Integer)
     book_id = db.Column(db.Integer)
     loan_date = db.Column(db.String(200))
-    return_date = db.Column(db.String(10))
+    return_date = db.Column(db.String(200))
 
     def __init__(self, customer_id, book_id, loan_date, return_date):
         self.customer_id = customer_id

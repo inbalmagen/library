@@ -1,6 +1,10 @@
 from flask import Blueprint, request, json
 from database import db
 from models import Loans
+from customers import Customers
+from books import Books
+from datetime import datetime, timedelta
+
 
 loans_blueprint = Blueprint('loans', __name__)
 
@@ -20,7 +24,35 @@ def get_loan(id):
 @loans_blueprint.route('/', methods=['POST'])
 def create_loan():
     data = request.get_json()
-    loan = Loans(data['customer_id'], data['book_id'], data['loan_date'], data['return_date'])
+    customer_id = data.get('customer_id')
+    book_id = data.get('book_id')
+    customer = Customers.query.get(data['customer_id'])
+    book = Books.query.get(data['book_id'])  
+
+    # Set loan_date as today's date
+    loan_date = datetime.now().strftime('%Y-%m-%d')
+
+
+    # Check if customer exists
+    if not customer:
+        return {'error': 'Customer not found.'}, 404 
+
+     # Check if book exists
+    if not book:
+        return {'error': 'Book not found.'}, 404
+    
+     # Calculate return date based on loan type
+    if book.type == '1':
+        return_date = datetime.strptime(loan_date, '%Y-%m-%d') + timedelta(days=10)
+    elif book.type == '2':
+        return_date = datetime.strptime(loan_date, '%Y-%m-%d') + timedelta(days=5)
+    elif book.type == '3':
+        return_date = datetime.strptime(loan_date, '%Y-%m-%d') + timedelta(days=2)
+    else:
+        return {'error': 'Invalid Book type.'}, 400
+                  
+
+    loan = Loans(data['customer_id'], data['book_id'], loan_date, return_date.strftime('%Y-%m-%d'))
     db.session.add(loan)
     db.session.commit()
     return {"add": "success"}

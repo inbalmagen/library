@@ -20,19 +20,16 @@
 	const MY_SERVER = 'http://127.0.0.1:5000';
 
 	const newLoan = async () => {
-		console.log('inside add new loans')
             const data = {
                 customer_id: document.getElementById("customer_id").value,
                 book_id: document.getElementById("book_id").value,
-                loan_date: document.getElementById("loan_date").value,
-                return_date: document.getElementById("return_date").value,
             };
             
             await axios.post(`${MY_SERVER}/loans`, data);
-            loadData();
+            await loadData();
         };
 
-		const deleteLoan = async () => {
+	const deleteLoan = async () => {
 			id = document.getElementById("loanId2").value
 
             loans1 = await axios.delete(MY_SERVER + `/loans/${id}`);
@@ -133,16 +130,16 @@
 					</div>
 					<div class="form-group">
 						<label>Book ID</label>
-						<textarea id="book_id" class="form-control" required></textarea>
+						<input type="text" id="book_id" class="form-control" required>
 					</div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label>Loan Date</label>
 						<textarea id="loan_date" class="form-control" required></textarea>
 					</div>
 					<div class="form-group">
 						<label>Return Date</label>
 						<input type="text" id="return_date" class="form-control" required>
-					</div>					
+					</div>					 -->
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
