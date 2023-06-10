@@ -17,8 +17,8 @@
 
 	const newLoan = async () => {
             const data = {
-                customer_id: document.getElementById("customer_id").value,
-                book_id: document.getElementById("book_id").value,
+                customer_id: document.getElementById("customer_id1").value,
+                book_id: document.getElementById("book_id1").value,
             };
             
             await axios.post(`${MY_SERVER}/loans`, data);
@@ -70,12 +70,21 @@
 			</td>
 		</tr>
 		`).join("");
-		////////////////////////////////////////////////////////////////////////
+		
+		// dropdown books
 		const bookResponse = await axios.get(`${MY_SERVER}/books`);
 		const books = bookResponse.data;
 		const bookSelectBody = document.getElementById("book_id1");
 		bookSelectBody.innerHTML = books.map(book => `
 		<option value="${book.id}">${book.name}</option>
+		`).join("");
+
+		// dropdown customers
+		const customerResponse = await axios.get(`${MY_SERVER}/customers`);
+		const customers = customerResponse.data;
+		const customerSelectBody = document.getElementById("customer_id1");
+		customerSelectBody.innerHTML = customers.map(customer => `
+		<option value="${customer.id}">${customer.name}</option>
 		`).join("");
 		////////////////////////////////////////////////////////////////////////
 	};
@@ -142,23 +151,12 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<div class="form-group">
-						<label>Customer ID</label>
-						<input type="text" id="customer_id" class="form-control" required>
-					</div>				
 						<div class="form-group">
 							<label>Customer Name</label>
 							<!-- <input type="text" id="customer_name" class="form-control" required> -->
 							<select id="customer_id1" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
-								<option value="1">?????</option>
-								<option value="2">?????</option>
-								<option value="3">?????</option>
 							</select>
 						</div>
-					<div class="form-group">
-						<label>Book ID</label>
-						<input type="text" id="book_id" class="form-control" required>
-					</div>
 					<div class="form-group">
 						<label>Book Name</label>
 						<!-- <input type="text" id="name" class="form-control" required> -->
