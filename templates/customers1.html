@@ -4,17 +4,13 @@
 	$(document).on("click", ".edit", function () {
 		var myCustomerId = $(this).data('id');
 		$(".modal-body #customerid3").val( myCustomerId );
-		// As pointed out in comments, 
-		// it is unnecessary to have to manually call the modal.
-		// $('#addBookDialog').modal('show');
+		
 	});
 
 	$(document).on("click", ".myDelete", function () {
 		var myCustomerId2 = $(this).data('id');
 		$("#customerId2").val( myCustomerId2 );
-		// As pointed out in comments, 
-		// it is unnecessary to have to manually call the modal.
-		// $('#addBookDialog').modal('show');
+		
 	});
 	const MY_SERVER = 'http://127.0.0.1:5000';
 

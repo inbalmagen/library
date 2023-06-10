@@ -10,7 +10,10 @@ loans_blueprint = Blueprint('loans', __name__)
 
 @loans_blueprint.route("/", methods=['GET'])
 def get_loans():
-    loans_list = [loan.to_dict() for loan in Loans.query.all()]
+    
+    query = db.session.query(Loans, Books, Customers).join(Books).join(Customers)
+    loans = query.all()
+    loans_list = [Loans.to_dict_with_names(loan) for loan in loans]
     json_data = json.dumps(loans_list)
     return json_data
 
@@ -19,8 +22,8 @@ def get_loan(id):
     loan = Loans.query.get_or_404(id)
     return json.dumps(loan.to_dict())
 
-# Add other loan-related routes here
-# Example: route for creating a loan
+# Add other loan-related routes 
+# Creating a loan
 @loans_blueprint.route('/', methods=['POST'])
 def create_loan():
     data = request.get_json()

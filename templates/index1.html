@@ -5,17 +5,13 @@
 	$(document).on("click", ".edit", function () {
 		var myBookId = $(this).data('id');
 		$(".modal-body #bookId1").val( myBookId );
-		// As pointed out in comments, 
-		// it is unnecessary to have to manually call the modal.
-		// $('#addBookDialog').modal('show');
+		
 	});
 
 	$(document).on("click", ".myDelete", function () {
 		var myBookId2 = $(this).data('id');
 		$("#bookId2").val( myBookId2 );
-		// As pointed out in comments, 
-		// it is unnecessary to have to manually call the modal.
-		// $('#addBookDialog').modal('show');
+		
 	});
 
 	const MY_SERVER = 'http://127.0.0.1:5000';
@@ -194,10 +190,6 @@
 							</select>
 						</div>						  
 					</div>
-					<!-- <div class="form-group">
-						<label>Type1</label>
-						<input type="text" id="type1" class="form-control" required>
-					</div>				 -->
 					<div hidden class="form-group">
 						<label>Book ID1</label>
 						<input type="text" class="form-control" id="bookId1"/>

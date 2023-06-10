@@ -50,8 +50,8 @@ class Loans(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     # customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     # book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
-    customer_id = db.Column(db.Integer)
-    book_id = db.Column(db.Integer)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     loan_date = db.Column(db.String(200))
     return_date = db.Column(db.String(200))
 
@@ -60,6 +60,20 @@ class Loans(db.Model):
         self.book_id = book_id
         self.loan_date = loan_date
         self.return_date = return_date
+
+    def to_dict_with_names(result):
+        loan = result[0]
+        book = result[1]
+        customer = result[2]
+        return {
+            'id': loan.id,
+            'customer_id': loan.customer_id,
+            'customer_name': customer.name,
+            'book_id': loan.book_id,
+            'name': book.name,
+            'loan_date': loan.loan_date,
+            'return_date': loan.return_date
+        }
 
     def to_dict(self):
         return {
