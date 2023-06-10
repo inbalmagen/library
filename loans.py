@@ -1,10 +1,12 @@
+import select
 from flask import Blueprint, request, json
 from database import db
 from models import Loans
 from customers import Customers
 from books import Books
 from datetime import datetime, timedelta
-
+from sqlalchemy import select
+from sqlalchemy.orm import aliased
 
 loans_blueprint = Blueprint('loans', __name__)
 
@@ -12,6 +14,15 @@ loans_blueprint = Blueprint('loans', __name__)
 def get_loans():
     
     query = db.session.query(Loans, Books, Customers).join(Books).join(Customers)
+    # LoansAlias = aliased(Loans)
+    # BooksAlias = aliased(Books)
+    # CustomersAlias = aliased(Customers)
+
+    # Construct the query with left joins
+    # query = select(Loans, Books, Customers).\
+    #     select_from(LoansAlias).\
+    #     outerjoin(BooksAlias, LoansAlias.book_id == BooksAlias.id).\
+    #     outerjoin(CustomersAlias, LoansAlias.customer_id == CustomersAlias.id)
     loans = query.all()
     loans_list = [Loans.to_dict_with_names(loan) for loan in loans]
     json_data = json.dumps(loans_list)

@@ -36,8 +36,8 @@
 		id = document.getElementById("loanId1").value
             
             const data = {
-                customer_id: document.getElementById("customer_id1").value,
-                book_id: document.getElementById("book_id1").value,
+                customer_id: document.getElementById("customer_id2").value,
+                book_id: document.getElementById("book_id2").value,
             };
             
             loans1 = await axios.put(MY_SERVER + `/loans/${id}`, data);
@@ -71,7 +71,7 @@
 		</tr>
 		`).join("");
 		
-		// dropdown books
+		// dropdown add books
 		const bookResponse = await axios.get(`${MY_SERVER}/books`);
 		const books = bookResponse.data;
 		const bookSelectBody = document.getElementById("book_id1");
@@ -79,11 +79,28 @@
 		<option value="${book.id}">${book.name}</option>
 		`).join("");
 
-		// dropdown customers
+		// dropdown add customers
 		const customerResponse = await axios.get(`${MY_SERVER}/customers`);
 		const customers = customerResponse.data;
 		const customerSelectBody = document.getElementById("customer_id1");
 		customerSelectBody.innerHTML = customers.map(customer => `
+		<option value="${customer.id}">${customer.name}</option>
+		`).join("");
+		////////////////////////////////////////////////////////////////////////
+
+		// dropdown edit books
+		const bookResponse2 = await axios.get(`${MY_SERVER}/books`);
+		const books2 = bookResponse2.data;
+		const bookSelectBody2 = document.getElementById("book_id2");
+		bookSelectBody2.innerHTML = books2.map(book => `
+		<option value="${book.id}">${book.name}</option>
+		`).join("");
+
+		// dropdown edit customers
+		const customerResponse2 = await axios.get(`${MY_SERVER}/customers`);
+		const customers2 = customerResponse2.data;
+		const customerSelectBody2 = document.getElementById("customer_id2");
+		customerSelectBody2.innerHTML = customers2.map(customer => `
 		<option value="${customer.id}">${customer.name}</option>
 		`).join("");
 		////////////////////////////////////////////////////////////////////////
@@ -185,13 +202,15 @@
 				</div>
 				<div class="modal-body">					
 					<div class="form-group">
-						<label>Customer ID</label>
-						<input type="text" id="customer_id1" class="form-control" required>
+						<label>Customer Name</label>
+						<select id="customer_id2" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
+						</select>
 					</div>
 					<div class="form-group">
-						<label>Book ID</label>
-						<textarea id="book_id1" class="form-control" required></textarea>
-					</div>					
+						<label>Book Name</label>
+						<select id="book_id2" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
+						</select>
+					</div>				
 					<div hidden class="form-group">
 						<label>Loan ID1</label>
 						<input type="text" class="form-control" id="loanId1"/>
