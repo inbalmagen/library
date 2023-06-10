@@ -73,8 +73,6 @@ def update_loan(id):
     data = request.get_json()
     loan.customer_id = data['customer_id']
     loan.book_id = data['book_id']
-    loan.loan_date = data['loan_date']
-    loan.return_date = data['return_date']
     db.session.commit()
     return {"update": "success"}
 

@@ -38,12 +38,10 @@
             const data = {
                 customer_id: document.getElementById("customer_id1").value,
                 book_id: document.getElementById("book_id1").value,
-                loan_date: document.getElementById("loan_date1").value,
-                return_date: document.getElementById("return_date1").value,
             };
             
             loans1 = await axios.put(MY_SERVER + `/loans/${id}`, data);
-            loadData();
+            await loadData();
 	};
 
 	const loadData = async () => {
@@ -66,7 +64,6 @@
 			<td>${loan.return_date}</td>
 			<td>
 				<a href="#editLoanModal" data-id="${loan.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-				<a href="#addLoanModal1" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 				<a href="#deleteLoanModal" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 			</td>
 		</tr>
@@ -171,16 +168,8 @@
 					<div class="form-group">
 						<label>Book ID</label>
 						<textarea id="book_id1" class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Loan Date</label>
-						<textarea id="loan_date1" class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Return Date</label>
-						<input type="text" id="return_date1" class="form-control" required>
-					</div>
-					<div class="form-group">
+					</div>					
+					<div hidden class="form-group">
 						<label>Loan ID1</label>
 						<input type="text" class="form-control" id="loanId1"/>
 					</div>								
@@ -207,7 +196,7 @@
 					<p>Are you sure you want to delete these Records?</p>
 					<p class="text-warning"><small>This action cannot be undone.</small></p>
 				</div>
-				<div class="form-group">
+				<div hidden class="form-group">
 					<label>Loan ID</label>
 					<input type="text" class="form-control" id="loanId2"/>
 				</div>
