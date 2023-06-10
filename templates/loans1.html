@@ -45,6 +45,8 @@
 	};
 
 	const loadData = async () => {
+
+		////////////////////////////////////////////////
 		const loanResponse = await axios.get(`${MY_SERVER}/loans`);
 		const loans = loanResponse.data;
 		const loanTableBody = document.getElementById("tableBody");
@@ -68,6 +70,14 @@
 			</td>
 		</tr>
 		`).join("");
+		////////////////////////////////////////////////////////////////////////
+		const bookResponse = await axios.get(`${MY_SERVER}/books`);
+		const books = bookResponse.data;
+		const bookSelectBody = document.getElementById("book_id1");
+		bookSelectBody.innerHTML = books.map(book => `
+		<option value="${book.id}">${book.name}</option>
+		`).join("");
+		////////////////////////////////////////////////////////////////////////
 	};
 
 	loadData();
@@ -82,7 +92,7 @@
 						<h2>Manage <b>Loans</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addLoanModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Loan</span></a>
+						<a href="#addLoanModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Book</span></a>
 						<a href="#deleteLoanModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
 					</div>
 				</div>
@@ -135,10 +145,25 @@
 					<div class="form-group">
 						<label>Customer ID</label>
 						<input type="text" id="customer_id" class="form-control" required>
-					</div>
+					</div>				
+						<div class="form-group">
+							<label>Customer Name</label>
+							<!-- <input type="text" id="customer_name" class="form-control" required> -->
+							<select id="customer_id1" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
+								<option value="1">?????</option>
+								<option value="2">?????</option>
+								<option value="3">?????</option>
+							</select>
+						</div>
 					<div class="form-group">
 						<label>Book ID</label>
 						<input type="text" id="book_id" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Book Name</label>
+						<!-- <input type="text" id="name" class="form-control" required> -->
+						<select id="book_id1" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example">
+						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
