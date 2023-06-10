@@ -52,12 +52,6 @@
 		const loanTableBody = document.getElementById("tableBody");
 		loanTableBody.innerHTML = loans.map(loan => `
 		<tr>
-			<td>
-				<span class="custom-checkbox">
-					<input type="checkbox" id="checkbox${loan.id}" name="options[]" value="${loan.id}">
-					<label for="checkbox${loan.id}"></label>				
-				</span>
-			</td>
 			<td>${loan.customer_id}</td>
 			<td>${loan.customer_name}</td>
 			<td>${loan.book_id}</td>
@@ -118,20 +112,13 @@
 						<h2>Manage <b>Loans</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addLoanModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Book</span></a>
-						<a href="#deleteLoanModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+						<a href="#addLoanModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Loan</span></a>
 					</div>
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-						</th>
 						<th>Customer id</th>
 						<th>Customer name</th>
 						<th>Book id</th>

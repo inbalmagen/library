@@ -59,12 +59,6 @@
 		const bookTableBody = document.getElementById("tableBody");
 		bookTableBody.innerHTML = books.map(book => `
 		<tr>
-			<td>
-				<span class="custom-checkbox">
-					<input type="checkbox" id="checkbox${book.id}" name="options[]" value="${book.id}">
-					<label for="checkbox${book.id}"></label>				
-				</span>
-			</td>
 			<td>${book.name}</td>
 			<td>t${book.author}</td>
 			<td>${book.year_published}</td>
@@ -90,19 +84,12 @@
 					</div>
 					<div class="col-sm-6">
 						<a href="#addBookModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Book</span></a>
-						<a href="#deleteBookModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
 					</div>
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-						</th>
 						<th>Name</th>
 						<th>Author</th>
 						<th>Year Published</th>
