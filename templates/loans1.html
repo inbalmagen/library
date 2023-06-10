@@ -66,6 +66,7 @@
 			<td>${loan.return_date}</td>
 			<td>
 				<a href="#editLoanModal" data-id="${loan.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+				<a href="#addLoanModal1" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 				<a href="#deleteLoanModal" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 			</td>
 		</tr>
@@ -114,6 +115,16 @@
 		</div>
 	</div>        
 </div>
+
+<div id="addLoanModal1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			SHAI
+		</div>
+	</div>
+</div>
+
+
 <!-- Add Loan Modal HTML -->
 <div id="addLoanModal" class="modal fade">
 	<div class="modal-dialog">
@@ -132,6 +143,7 @@
 						<label>Book ID</label>
 						<input type="text" id="book_id" class="form-control" required>
 					</div>
+				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 					<input type="submit" onclick="newLoan()" class="btn btn-success" value="Add">
@@ -140,6 +152,8 @@
 		</div>
 	</div>
 </div>
+
+
 <!-- Edit Loan Modal HTML -->
 <div id="editLoanModal" class="modal fade">
 	<div class="modal-dialog">
