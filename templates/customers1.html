@@ -65,7 +65,40 @@
 	};
 
 	loadData();
+
+	const searchCustomers = () => {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const customerRows = document.querySelectorAll("#tableBody tr");
+
+        customerRows.forEach((row) => {
+            const name = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+            const city = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+            const age = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+            if (
+                name.includes(searchInput) ||
+                city.includes(searchInput) ||
+                age.includes(searchInput) 
+            ) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    };
 </script>
+
+<!-- Search Box -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-4">
+            <div class="input-group mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search for customers...">
+                <button class="btn btn-primary" onclick="searchCustomers()">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container-xl">
 	<div class="table-responsive">
