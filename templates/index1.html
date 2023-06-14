@@ -14,7 +14,7 @@
 		
 	});
 
-	const MY_SERVER = 'http://127.0.0.1:5000';
+	// const MY_SERVER = 'http://127.0.0.1:5000';
 
 	const addNewBook = async () => {
 		console.log('inside add new book')
@@ -72,7 +72,42 @@
 	};
 
 	loadData();
+
+	const searchBooks = () => {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const bookRows = document.querySelectorAll("#tableBody tr");
+
+        bookRows.forEach((row) => {
+            const name = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+            const author = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+            const yearPublished = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+            const type = row.querySelector("td:nth-child(4)").textContent.toLowerCase();
+
+            if (
+                name.includes(searchInput) ||
+                author.includes(searchInput) ||
+                yearPublished.includes(searchInput) ||
+                type.includes(searchInput)
+            ) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    };
 </script>
+
+<!-- Search Box -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-4">
+            <div class="input-group mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search for books...">
+                <button class="btn btn-primary" onclick="searchBooks()">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container-xl">
 	<div class="table-responsive">
