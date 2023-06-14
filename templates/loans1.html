@@ -44,64 +44,64 @@
             await loadData();
 	};
 
-	const loadData = async () => {
+  const displayLoans = (loans) => {
+	const loanTableBody = document.getElementById("tableBody");
+    loanTableBody.innerHTML = loans.map(loan => `
+      <tr>
+        <td>${loan.customer_id}</td>
+        <td>${loan.customer_name}</td>
+        <td>${loan.book_id}</td>
+        <td>${loan.name}</td>
+        <td>${loan.loan_date}</td>
+        <td>${loan.return_date}</td>
+        <td>
+          <a href="#editLoanModal" data-id="${loan.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+          <a href="#deleteLoanModal" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+        </td>
+      </tr>
+    `).join("");
+  };
+  
+  
+  const loadAllLoans = async () => {
+    const loanResponse = await axios.get(`${MY_SERVER}/loans`);
+    const loans = loanResponse.data;
+    displayLoans(loans);
+  };
 
-		////////////////////////////////////////////////
-		const loanResponse = await axios.get(`${MY_SERVER}/loans`);
-		const loans = loanResponse.data;
-		const loanTableBody = document.getElementById("tableBody");
-		loanTableBody.innerHTML = loans.map(loan => `
-		<tr>
-			<td>${loan.customer_id}</td>
-			<td>${loan.customer_name}</td>
-			<td>${loan.book_id}</td>
-			<td>${loan.name}</td>
-			<td>${loan.loan_date}</td>
-			<td>${loan.return_date}</td>
-			<td>
-				<a href="#editLoanModal" data-id="${loan.id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-				<a href="#deleteLoanModal" data-id="${loan.id}" class="delete myDelete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-			</td>
-		</tr>
-		`).join("");
-		
-		// dropdown add books
-		const bookResponse = await axios.get(`${MY_SERVER}/books`);
-		const books = bookResponse.data;
-		const bookSelectBody = document.getElementById("book_id1");
-		bookSelectBody.innerHTML = books.map(book => `
-		<option value="${book.id}">${book.name}</option>
-		`).join("");
+  const loadExpiredLoans = async () => {
+    const loanResponse = await axios.get(`${MY_SERVER}/loans`);
+    const loans = loanResponse.data;
+    const currentDate = new Date();
 
-		// dropdown add customers
-		const customerResponse = await axios.get(`${MY_SERVER}/customers`);
-		const customers = customerResponse.data;
-		const customerSelectBody = document.getElementById("customer_id1");
-		customerSelectBody.innerHTML = customers.map(customer => `
-		<option value="${customer.id}">${customer.name}</option>
-		`).join("");
-		////////////////////////////////////////////////////////////////////////
+    const expiredLoans = loans.filter(loan => {
+      const returnDate = new Date(loan.return_date);
+      return returnDate < currentDate;
+    });
 
-		// dropdown edit books
-		const bookResponse2 = await axios.get(`${MY_SERVER}/books`);
-		const books2 = bookResponse2.data;
-		const bookSelectBody2 = document.getElementById("book_id2");
-		bookSelectBody2.innerHTML = books2.map(book => `
-		<option value="${book.id}">${book.name}</option>
-		`).join("");
+    displayLoans(expiredLoans);
+  };
 
-		// dropdown edit customers
-		const customerResponse2 = await axios.get(`${MY_SERVER}/customers`);
-		const customers2 = customerResponse2.data;
-		const customerSelectBody2 = document.getElementById("customer_id2");
-		customerSelectBody2.innerHTML = customers2.map(customer => `
-		<option value="${customer.id}">${customer.name}</option>
-		`).join("");
-		////////////////////////////////////////////////////////////////////////
-	};
+  const toggleExpiredLoans = () => {
+	const expiredLoansToggle = document.getElementById("expiredLoansToggle1");
+    if (expiredLoansToggle && expiredLoansToggle.checked) {
+      loadExpiredLoans();
+    } else {
+      loadAllLoans();
+    }
+  };
 
-	loadData();
+  toggleExpiredLoans(); // Load the initial loans based on the toggle state
+
 </script>
+
+<div class="toggle-container">
+	<label>Show Expired Loans:</label>
+	<label class="switch">
+	  <input type="checkbox" id="expiredLoansToggle1" onclick="toggleExpiredLoans()">
+	  <span class="slider round"></span>
+	</label>
+  </div>
 
 <div class="container-xl">
 	<div class="table-responsive">
