@@ -48,9 +48,9 @@ The project follows a modular structure with separate modules for each entity (B
 The project includes HTML templates for the different pages of the library management system. These templates define the structure and layout of the user interface and incorporate Bootstrap for styling. JavaScript code is used for interactivity, such as handling form submissions and updating data dynamically.
 
 - `base.html`: The base template that provides the common structure for all pages. It includes a navigation bar and a content section where page-specific content is rendered.
-- `books.html`: The template for the Books page, where you can view, add, edit, and delete books.
-- `customers.html`: The template for the Customers page, where you can manage customer records.
-- `loans.html`: The template for the Loans page, where you can track loans and returns of books.
+- `books1.html`: The template for the Books page, where you can view, add, edit, and delete books.
+- `customers1.html`: The template for the Customers page, where you can manage customer records.
+- `loans1.html`: The template for the Loans page, where you can track loans and returns of books.
 
 These templates work together with the backend logic implemented in Python to create a functional and user-friendly library management system.
 
@@ -81,18 +81,7 @@ The following features of the system involve JSON:
 By utilizing JSON, the library management system achieves a flexible and efficient data exchange mechanism, making it easier to manage and manipulate library records.
 
 
-### Unit Tests
-
-The project includes unit tests to ensure the correctness of the implemented functionality. The unit tests cover the various methods in the DAL classes.
-
 ## Deployment
 
-The project has been deployed to [Render](https://render.com/) and is accessible at [Your Render App URL](https://your-app-url.com). You can visit the live application and interact with it.
+The project has been deployed to [Render](https://render.com/) and is accessible at [https://library-spx5.onrender.com/customersPage]. You can visit the live application and interact with it.
 
-## Contributing
-
-Contributions to this project are welcome. If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).

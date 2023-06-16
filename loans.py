@@ -14,15 +14,7 @@ loans_blueprint = Blueprint('loans', __name__)
 def get_loans():
     
     query = db.session.query(Loans, Books, Customers).join(Books).join(Customers)
-    # LoansAlias = aliased(Loans)
-    # BooksAlias = aliased(Books)
-    # CustomersAlias = aliased(Customers)
-
-    # Construct the query with left joins
-    # query = select(Loans, Books, Customers).\
-    #     select_from(LoansAlias).\
-    #     outerjoin(BooksAlias, LoansAlias.book_id == BooksAlias.id).\
-    #     outerjoin(CustomersAlias, LoansAlias.customer_id == CustomersAlias.id)
+  
     loans = query.all()
     loans_list = [Loans.to_dict_with_names(loan) for loan in loans]
     json_data = json.dumps(loans_list)
@@ -33,7 +25,6 @@ def get_loan(id):
     loan = Loans.query.get_or_404(id)
     return json.dumps(loan.to_dict())
 
-# Add other loan-related routes 
 # Creating a loan
 @loans_blueprint.route('/', methods=['POST'])
 def create_loan():
