@@ -15,8 +15,6 @@ def get_customer(id):
     customer = Customers.query.get_or_404(id)
     return json.dumps(customer.to_dict())
 
-# Add other customer-related routes here
-# Example: route for updating a customer
 @customers_blueprint.route("/<id>", methods=['PUT'])
 def update_customer(id):
     customer = Customers.query.get_or_404(id)

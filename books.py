@@ -15,8 +15,6 @@ def get_book(id):
     book = Books.query.get_or_404(id)
     return json.dumps(book.to_dict())
 
-# Add other book-related routes here
-# Example: route for adding a book
 @books_blueprint.route("/", methods=['POST'])
 def add_book():
     data = request.get_json()

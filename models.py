@@ -48,8 +48,6 @@ class Customers(db.Model):
 # Loans Model
 class Loans(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
-    # customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    # book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     loan_date = db.Column(db.String(200))
